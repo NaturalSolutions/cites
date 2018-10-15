@@ -5,7 +5,7 @@
     
     
     </div>
-	<div class="row">
+	<div class="row taxon-details">
 	<div class="col-md-6">
 		<div class="swiperDiv"> <!--  -->
 		<div class="swiper-container">

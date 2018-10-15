@@ -22,6 +22,11 @@ function add_js_scripts() {
 
 	// pass Ajax Url to script.js
 	wp_localize_script('taxonsSearch', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+
+	wp_enqueue_script( 'jquery-ui-autocomplete' );
+    wp_register_style( 'jquery-ui-styles','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' );
+    wp_enqueue_style( 'jquery-ui-styles' );
+    wp_localize_script( 'jquery-ui-autocomplete', 'adminAjax', admin_url( 'admin-ajax.php' ) );
 }
 add_action('wp_enqueue_scripts', 'add_js_scripts');
 

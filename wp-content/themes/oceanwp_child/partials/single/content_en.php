@@ -2,7 +2,7 @@
     
     <span class="taxon-hierarchy-label">Taxon rank</span>: <span  class="taxon-hierarchy-kigdom">Kigdom</span> / <span  class="taxon-hierarchy-phylum">Phylum</span> / <span class="taxon-hierarchy-class">Class</span> / <span  class="taxon-hierarchy-order">Order</span> / <span class="taxon-hierarchy-family">Family</span> / <span class="taxon-hierarchy-genus">Genus</span> / <span class="taxon-hierarchy-species">Species</span> / <span class="taxon-hierarchy-subspecies">Subspecies</span>
     </div>
-	<div class="row">
+	<div class="row taxon-details">
 	<div class="col-md-6">
 		<div class="swiperDiv"> <!--  -->
 		<div class="swiper-container">

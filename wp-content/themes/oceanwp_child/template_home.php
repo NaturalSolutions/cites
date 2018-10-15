@@ -15,6 +15,11 @@ Template Post Type:  page
 	$body_hair = "Hair or fur";
 	$body_features = "Feathers";
 	$body_other = "Other";
+	$searchResultMsg = "Select your search criterias.";
+	$subTitle = "Identify a species and verify whether its trade is illegal or regulated at international level";
+
+	
+
 
 	
 	$caract_label = "Caracteristics";
@@ -40,9 +45,14 @@ Template Post Type:  page
 		$caract_tail = "Queue";
 		$caract_beak = "Bec";
 		$caract_shell = "Coquille";
+		$searchResultMsg = "Sélectionnez vos critères de recherche.";
+		$subTitle = "Identifier une espèce et vérifier si son commerce international est illégal ou réglementé";
+		
+		
+		
 	}
  ?>
-
+<div class="subTitle"><?php  echo($subTitle) ?></div>
 <div class="wrap">
 	
 
@@ -51,6 +61,7 @@ Template Post Type:  page
 			<div class="generalSearch row">
 				<div class="col-md-12">
 				<input  id="searchVal" class="simpleInput form-control" placeholder="<?php echo($placeholder) ?>">
+				<button id="advsearchBtn" class="search-btn"><?php echo($search) ?></button>
 				<!--<input type="submit" class="search-submit" id="searchBtn">-->
 				</div>
 				<!--<div class="col-md-4">
@@ -71,10 +82,10 @@ Template Post Type:  page
 					<!--<input  id="body" class="advInput form-control">  -->
 					<select id="body">
 					<option></option>
-						<option><?php echo($body_scales) ?> </option>
-						<option><?php echo($body_hair) ?></option>
-						<option><?php echo($body_features) ?></option>
-						<option><?php echo($body_other) ?></option>
+						<option value="Scales"><?php echo($body_scales) ?> </option>
+						<option value="Hair or fur"><?php echo($body_hair) ?></option>
+						<option value="Feathers"><?php echo($body_features) ?></option>
+						<option value="Other"><?php echo($body_other) ?></option>
 
 
 					</select>
@@ -84,42 +95,45 @@ Template Post Type:  page
 					<label><?php echo($caract_label) ?> :</label>
 					<!--<input  id="caract" class="advInput form-control">-->
 					<div class="">
-						<div class="inline-bloc">
-							<input type="checkbox" id="Ailes" name="caract"    
-								value="Ailes"   />
+						<div class=" inputFilterCheckbox">
+							<input type="checkbox" id="Ailes" name="caract"  class="chbox"  
+								value="Wings"   />
 							<label for="Ailes"><?php echo($caract_wings) ?> </label>
 						</div>
-						<div  class="inline-bloc">
-							<input type="checkbox" id="Queue" name="caract"    
-								value="Queue"   />
+						<div  class=" inputFilterCheckbox">
+							<input type="checkbox" id="Queue" name="caract"   class="chbox" 
+								value="Tail"   />
 							<label for="Queue"><?php echo($caract_tail) ?></label>
 						</div>
-						<div  class="inline-bloc">
-							<input type="checkbox" id="Bec" name="caract"    
-								value="Bec"   />
+						<div  class=" inputFilterCheckbox">
+							<input type="checkbox" id="Bec" name="caract"   class="chbox"   
+								value="Beak"   />
 							<label for="Bec"><?php echo($caract_beak) ?></label>
 						</div>
-						<div  class="inline-bloc">
-							<input type="checkbox" id="Coquille" name="caract"    
-								value="Coquille"   />
+						<div  class="">
+							<input type="checkbox" id="Coquille" name="caract"    class="chbox" 
+								value="Shell"   />
 							<label for="Coquille"><?php echo($caract_shell) ?></label>
 						</div>
 						<input class="hidden" id="language" value="<?php echo($lang) ?>">
 					</div>
 				</div>
 				<br/>
-				<button id="advsearchBtn" class="serach-btn"><?php echo($search) ?></button>
+				
 				<!--<button id="advsearchMaskBtn"><?php echo($hide) ?></button>  -->
 			</div>
-			<hr class="hrSearch"/>
+			
 			</div>
 		</div>
+
+
 	
 
 
 	<div id="primary" class="">
 	<div class="row">
 		<div id="results" class="col-md-12">
+		<p class="textResults"><?php echo($searchResultMsg) ?></p>
 		</div>
 	</div>
 		<!--<main id="main" class="site-main" role="main">

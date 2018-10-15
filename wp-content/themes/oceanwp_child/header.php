@@ -1,15 +1,30 @@
 <?php
 /**
  * The Header for our theme.
+ * 
  *
  * @package OceanWP WordPress theme
- */ ?>
+ * 
+ * 
+ */ 
+$lang=get_bloginfo("language");
+$title = 'Threatened species';
+//$subTitle = "Identify a species and verify whether its trade is illegal or regulated at international level";
+if ($lang == 'fr-FR'){
+	$title = "Espèces menacées";
+	//$subTitle = "Identifier une espèce et vérifier si son commerce international est illégal ou réglementé";
+}
+
+ ?>
 
 <!DOCTYPE html>
 <html <?php language_attributes(); ?><?php oceanwp_schema_markup( 'html' ); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<!--<link rel="profile" href="http://gmpg.org/xfn/11">-->
+	<LINK REL="SHORTCUT ICON" href="<?php 
+				$url=get_site_url().'/wp-content/uploads/cites-favicon/favicon-32x32.png'; 
+				echo $url ?>">
 
 	<?php wp_head(); ?>
 </head>
@@ -24,14 +39,37 @@
 
 		<div id="wrap" class="clr">
 
-			<?php do_action( 'ocean_top_bar' ); ?>
-			<ul class="language-switch"><?php pll_the_languages(array('dropdown'=>1));  ?></ul>
+			<?php //do_action( 'ocean_top_bar' ); ?>
+			<div class="headerContainer">
+			
+			<div class="navLang">
+			
+			<a class="linkAbout" href="<?php 	
+				$lien = '/about';
+				$display = 'About';
+				if ($lang == 'fr-FR'){
+					$lien = '/a-propos';
+					$display = 'A propos';
+				}
+				$url=get_site_url().$lien; 
+
+				echo $url ?> ">  
+			<span><?php echo $display ?></span></a>|
+			<?php pll_the_languages(array('show_names'=>1));  ?>
+			
+			</div>   <!-- fin  .navLang -->
 			<div class="logo">
 				<a href="<?php 	echo bloginfo('url');?> ">
 				<img src="<?php 
-				$url=get_site_url().'/wp-content/uploads/photos/logo.jpg'; 
-				echo $url ?>"></a>
+				$url=get_site_url().'/wp-content/uploads/photos/logocites.png'; 
+				echo $url ?>"><span class="siteTitle"><?php echo($title) ?></span></a>
+				
+				
 			</div>
+			</div> <!-- fin headerContainer -->
+			
+			
+
 			<?php //do_action( 'ocean_header' ); ?>
 
 			<?php do_action( 'ocean_before_main' ); ?>

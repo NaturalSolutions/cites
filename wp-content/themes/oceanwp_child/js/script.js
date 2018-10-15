@@ -1,4 +1,5 @@
 var $ = jQuery.noConflict();
+var domain = 'http://213.32.18.30/cites';
 var taxonomy = {
     "KINGDOM": {
         "fr": "Règne",
@@ -78,8 +79,29 @@ $(document).ready(function() {
         $('.advInput').val('');
 
     });
-});
 
+    // autocomplete on origin field (country)
+    $('#origin').autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: domain + '/wp-content/themes/oceanwp_child/pays.php',
+                dataType: "json",
+                data: {
+                    'query': document.getElementById('origin').value,
+                    'lang': $('#language').val()
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        minLength: 3,
+        onSelect: function(suggestion) {
+
+        }
+    });
+
+});
 
 function filter() {
     var $ = jQuery.noConflict();
@@ -88,7 +110,7 @@ function filter() {
     params['type'] = 'simple';
     params['search'] = keyword;
     params['origin'] = $('#origin').val();
-    params['body'] = $('#body').val();
+    params['body'] = $('#body option:selected').val();
     params['language'] = $('#language').val();
     var caracteristics = [];
     $('input[name="caract"]:checked').each(function() {
@@ -96,9 +118,32 @@ function filter() {
     });
     params['caract'] = caracteristics
 
-    ajaxCall(params);
+    if ((params['language'] != 'fr-FR') || (!params['origin'])) {
+        ajaxCall(params);
+    } else {
+        $.ajax({
+            url: domain + '/wp-content/themes/oceanwp_child/paysTraduction.php',
+            dataType: "json",
+            data: {
+                'query': document.getElementById('origin').value,
+            },
+            success: function(data) {
+                if (data[0]) {
+                    params['origin'] = data[0];
 
+                } else {
+                    params['origin'] = 'null'
+                }
+                ajaxCall(params);
+            },
+            beforeSend: function() {
+                $('#results').find('.taxon-post').remove();
+                $(document).scrollTop();
+                $('#results').html('<div class="page-content" id="loader"><img src="' + domain + '/wp-content/themes/oceanwp_child/res/ajax-load.gif"></div>');
+            }
+        });
 
+    }
 }
 
 function ajaxCall(params) {
@@ -121,6 +166,13 @@ function ajaxCall(params) {
         success: function(response) {
             var list = JSON.parse(response);
             $('#results').html('');
+
+            if (list.length == 0) {
+                var message = "<p class='textResults'>Pas d'espèces pour les critères sélectionnés.</p>"
+                if (ln != 'fr-FR') { message = "<p class='textResults'>No species for selected criterias.</p>" }
+                $('#results').html(message);
+                return;
+            }
             for (var i = 0; i < list.length; i++) {
                 var obj = list[i];
                 var lang = obj["lang"];
@@ -149,7 +201,9 @@ function ajaxCall(params) {
         beforeSend: function() {
             $('#results').find('.taxon-post').remove();
             $(document).scrollTop();
-            $('#results').html('<div class="page-content" id="loader">&nbsp;&nbsp;Chargement des résultats...</div>');
+            var message = 'Loading results...';
+            if (ln == 'fr-FR') { message = 'Chargement des résultats...' }
+            $('.textResults').html('<div class="page-content" id="loader">&nbsp;&nbsp;' + message + '</div>');
         }
     });
 
@@ -221,7 +275,7 @@ function getCitesElement(cites, lang, rank, detail) {
         case 'I':
             cssClass = "cites_appendix a_I";
             if (lang == 'fr') {
-                if ((rankval == 'Espèce') || (rankval == 'Sous-espèce')) {
+                if (((rankval == 'Espèce') || (rankval == 'Sous-espèce')) || (detail==false)) {
                     citesMsg = rankval + " menacée d'extinction, commerce international illégal.";
                 } else {
                     citesMsg = "Les espèces appartenant à ce(cette) " + ranklabel + " sont menacées d'extinction, leur commerce international est illégal.";
@@ -231,7 +285,7 @@ function getCitesElement(cites, lang, rank, detail) {
 
             } else {
                 // lang = en
-                if ((rankval == 'Species') || (rankval == 'Subspecies')) {
+                if (((rankval == 'Species') || (rankval == 'Subspecies')) || (detail==false)){
                     citesMsg = rankval + ' threatened with extinction, international trade is illegal.';
                 } else {
                     citesMsg = "Species belonging to " + ranklabel + " are threatened with extinction, their international trade is illegal.";
@@ -245,7 +299,7 @@ function getCitesElement(cites, lang, rank, detail) {
         case 'II':
             cssClass = "cites_appendix a_II";
             if (lang == 'fr') {
-                if ((rankval == 'Espèce') || (rankval == 'Sous-espèce')) {
+                if (((rankval == 'Espèce') || (rankval == 'Sous-espèce')) || (detail==false)) {
                     citesMsg = rankval + ' vulnérable, commerce international réglementé.';
                 } else {
                     citesMsg = 'Les espèces appartenant à  ce (cette) ' + ranklabel + ' sont vulnérables, leur commerce international est réglementé.';
@@ -255,7 +309,7 @@ function getCitesElement(cites, lang, rank, detail) {
 
             } else {
                 // lang = en
-                if ((rankval == 'Species') || (rankval == 'Subspecies')) {
+                if (((rankval == 'Species') || (rankval == 'Subspecies')) || (detail==false)){
                     citesMsg = 'Vulnerable ' + rankval + ', international trade is regulated.';
                 } else {
                     citesMsg = 'Species belonging to ' + ranklabel + ' are vulnerable, their international trade is regulated.';
@@ -270,7 +324,7 @@ function getCitesElement(cites, lang, rank, detail) {
             cssClass = "cites_appendix a_III";
             if (lang == 'fr') {
 
-                if ((rankval == 'Espèce') || (rankval == 'Sous-espèce')) {
+                if (((rankval == 'Espèce') || (rankval == 'Sous-espèce')) || (detail==false)) {
                     citesMsg = rankval + ' protégée par au moins un pays sur son territoire, commerce international réglementé.';
                 } else {
                     citesMsg = 'Les espèces appartenant à  ce (cette) ' + ranklabel + ' sont protégées par au moins un pays sur son territoire, leur commerce international est réglementé.';
@@ -279,7 +333,7 @@ function getCitesElement(cites, lang, rank, detail) {
                 summary = "Les espèces inscrites à l'annexe III de la CITES sont des espèces inscrites à la demande d'une partie (pays) qui en réglemente déjà le commerce et qui a besoin de la coopération des autres parties pour en empêcher l'exploitation illégale ou non durable. Le commerce international des spécimens des espèces inscrites à cette annexe n'est autorisé que sur présentation des permis ou certificats appropriés.";
             } else {
                 // lang = en 
-                if ((rankval == 'Species') || (rankval == 'Subspecies')) {
+                if (((rankval == 'Species') || (rankval == 'Subspecies')) || (detail==false)){
                     citesMsg = rankval + ' protected by at least one country within its territory, international trade is regulated.';
                 } else {
                     citesMsg = 'Species belonging to ' + ranklabel + ' are protected by at least one country within its territory, their international trade is regulated.';
