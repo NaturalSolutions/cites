@@ -9,6 +9,7 @@ Template Post Type:  page
 	$search = 'search';
 	$adv = 'advanced';
 	$placeholder = "Specie name";
+	$placeholderCountry = "Country";
 	$origin_label ="Geographic distribution";
 	$body_label = "Body";
 	$body_scales = "Scales";
@@ -34,6 +35,7 @@ Template Post Type:  page
 		$adv = 'avancée';
 		$hide = 'masquer';
 		$placeholder = "Nom de l'espèce";
+		$placeholderCountry = "Pays";
 		$origin_label ="Provient de";
 		$body_label = "Couvert de";
 		$caract_label = "Possède";
@@ -61,7 +63,10 @@ Template Post Type:  page
 			<div class="generalSearch row">
 				<div class="col-md-12">
 				<input  id="searchVal" class="simpleInput form-control" placeholder="<?php echo($placeholder) ?>">
-				<button id="advsearchBtn" class="search-btn"><?php echo($search) ?></button>
+				<button id="advsearchBtn" class="search-btn"><img src ="<?php 
+				$url=get_site_url().'/wp-content/uploads//photos/search.png';
+				echo $url ?>" style="height: 20px"></button>
+				
 				<!--<input type="submit" class="search-submit" id="searchBtn">-->
 				</div>
 				<!--<div class="col-md-4">
@@ -75,12 +80,12 @@ Template Post Type:  page
 			<div class="advancedSearch  row">
 				<div class="col-md-4">
 					<label><?php echo($origin_label) ?> :</label>
-					<input  id="origin" class="advInput form-control">
+					<input  id="origin" class="advInput form-control"    placeholder="<?php echo($placeholderCountry) ?>" >
 				</div>
 				<div class="col-md-4">
 					<label><?php echo($body_label) ?> :</label>
 					<!--<input  id="body" class="advInput form-control">  -->
-					<select id="body">
+					<select id="body" placeholder="Peau">
 					<option></option>
 						<option value="Scales"><?php echo($body_scales) ?> </option>
 						<option value="Hair or fur"><?php echo($body_hair) ?></option>
@@ -94,7 +99,7 @@ Template Post Type:  page
 				<div class="col-md-4">
 					<label><?php echo($caract_label) ?> :</label>
 					<!--<input  id="caract" class="advInput form-control">-->
-					<div class="">
+					<div class="characteristiques">
 						<div class=" inputFilterCheckbox">
 							<input type="checkbox" id="Ailes" name="caract"  class="chbox"  
 								value="Wings"   />
@@ -130,7 +135,7 @@ Template Post Type:  page
 	
 
 
-	<div id="primary" class="">
+	<div id="primary" class="container-fluid">
 	<div class="row">
 		<div id="results" class="col-md-12">
 		<p class="textResults"><?php echo($searchResultMsg) ?></p>

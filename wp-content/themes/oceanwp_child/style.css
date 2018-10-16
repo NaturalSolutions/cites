@@ -15,9 +15,15 @@ body {
     color: black!important;
 }
 
+select#body{
+    border-radius: 4px;
+    border: solid 1px transparent;
+}
+
 .searchContainer {
-    padding-top: 20px;
+    /*padding-top: 20px;*/
     padding-bottom: 5px;
+    background-color: #0b6ba8;
 }
 .simpleInput {
     display: inline;
@@ -38,7 +44,15 @@ body {
     vertical-align: top;
     text-align: center;
     min-height: 350px;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(36,36,36,1);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(36,36,36,1);
+    box-shadow: 0px 3px 5px 0px rgba(36,36,36,1);
+    transition: all .2s ease-in-out;
 }
+
+/* .taxon-post:hover{
+    transform: scale(1.05);
+} */
 
 .taxon-img {
     max-height: 200px;
@@ -122,22 +136,24 @@ body {
     text-align: left;
     font-style: italic;
     width: 160px;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 select#body {
     color: black;
 }
 
 .citesStatus {
-    width: 210px;
+    width: 100%;/*210px*/
     text-align: center;
     padding: 5px;
     margin-left: 10px;
-    background-color: white;
+    background-color: rgba(252, 252, 252, 1);
     margin-top: 5px;
 }
 
-.citesStatus.pict {
-    padding-left: 5px!important;
+.citesStatus .col-md-2.pict {
+    padding-left: 0px!important;
 }
 
 .content-area {
@@ -163,7 +179,7 @@ select#body {
     margin: 0 auto;
     padding: 20px;
     padding-top: 30px;
-    background-color: #0b6ba8;
+    /* background-color: #0b6ba8; */
 }
 
 .filter,
@@ -172,6 +188,14 @@ select#body {
     border-style: solid;
     border-width: 1px;
 }
+
+#results{
+    border: solid 1px transparent;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+}
+
 .textResults {
     color : white;
 }
@@ -179,6 +203,7 @@ select#body {
 .filter {
     background-color: #0b6ba8;
     color: white;
+    border: solid 1px transparent;
 }
 
 .inputFilterCheckbox {
@@ -186,13 +211,24 @@ select#body {
 }
 
 .citesHelp {
-    /*max-width: 1200px;*/
+    max-width: 1200px;
     float: none;
-    /*margin: 0 auto;*/
+    margin: 0 auto;
     margin-bottom: 5px;
+    background :#f6f6f6;
+    padding: 15px 15px;
 }
 .citesHelp .title, .citesHelp .title a {
     color :#0b6ba8;
+}
+
+.citesHelp .row{
+    margin-top: 10px;
+}
+
+.citesHelp .title a{
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .subTitle {
@@ -262,12 +298,24 @@ input[type=checkbox]:checked:before {
 }
 
 .search-btn {
-    float: right;
-    margin: 15px;
-    padding: 5px;
-    color: #0b6ba8;
+    position: absolute;
+    top: 0;
+    right: 14px;
+    padding: 0px;
+    height: 34px;
+    padding : 0 10px;
+    margin: 0px;
+    background-color: #063a5b;
+    color: #fff;
+    border: solid 1px transparent;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
+.generalSearch, .advancedSearch{
+    width: 70%;
+    margin: 0 auto !important;
+}
 .inline-bloc {
     display: inline-block;
 }
@@ -342,7 +390,7 @@ taxon-geo {
 }
 
 #main {
-    margin-bottom: 120px;
+    margin-bottom: 50px;
 }
 
 footer,
@@ -392,15 +440,45 @@ footer,
     margin-top: 10px;
     text-align: left!important;
 }
- 
+.form-control{
+    border: solid 1px transparent !important;
+}
+#primary{
+    padding : 0px !important;
+}
+#primary .row{
+    margin: 0px !important;
+}
+
+.textResults{
+    color: #000;
+}
+
+/* FOOTER */
+
+footer .clr{
+    width: 80%;
+    margin: 0 auto;
+}
+
+#footer-bottom-inner{
+    width: 100%;
+    margin: 0;
+}
+
+footer p{
+    margin: 0;
+    min-height: 75px;
+    text-align: left;
+}
 
 
 /* phone  */
 
 @media only screen and (max-width: 600px) {
     .taxon-post {
-        width: 320px;
-        margin: 5px;
+        width: 100%; /*320px*/
+        margin: 0px;
         margin-bottom: 15px;
     }
     .taxon-img {
@@ -450,4 +528,47 @@ footer,
     .site-footer {
         position: relative!important;
     }
+    footer .clr{
+        width: 100%;
+    }
+    .characteristiques{
+        display: flex;
+        justify-content: space-between;
+    }
+    .advancedSearch div.col-md-4{
+        margin-top: 15px;
+    }
+    .advancedSearch div.col-md-4:first-child{
+        margin-top: 0;
+    }
+    .navLang{
+        float: none;
+        text-align: right;
+    }
+    .generalSearch, .advancedSearch{
+        width: 100%;
+    }
+    .inputFilterCheckbox{
+        margin-right: 2px;
+    }
+    .searchContainer .filter{
+        padding: 15px 0px !important;
+    }
+}
+
+@media only screen and (max-width: 990px){
+    .characteristiques{
+        display: flex;
+        justify-content: space-between;
+        
+    }
+}
+
+@media only screen and (min-width: 990px){
+ .citesHelp .row .col-md-4:first-child{
+     border-right: solid 1px #ccc;
+ }
+ .citesHelp .row .col-md-4:last-child{
+    border-left: solid 1px #ccc;
+ }
 }

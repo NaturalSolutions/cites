@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <?php do_action( 'ocean_before_footer_inner' ); ?>
 
-    <div id="footer-inner" class="clr">
+    <div id="footer-inner" class="">
 
         <!-- status Cites -->
         
