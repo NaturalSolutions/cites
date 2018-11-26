@@ -67,13 +67,8 @@ Template Post Type:  page
 				$url=get_site_url().'/wp-content/uploads//photos/search.png';
 				echo $url ?>" style="height: 20px"></button>
 				
-				<!--<input type="submit" class="search-submit" id="searchBtn">-->
+
 				</div>
-				<!--<div class="col-md-4">
-				<button id="searchBtn"><?php echo($search) ?></button>
-				
-				<button id="advShowBtn"><?php echo($adv) ?></button>
-				</div>  -->
 				
 			</div>
 			<hr/>
@@ -84,7 +79,7 @@ Template Post Type:  page
 				</div>
 				<div class="col-md-4">
 					<label><?php echo($body_label) ?> :</label>
-					<!--<input  id="body" class="advInput form-control">  -->
+
 					<select id="body" placeholder="Peau">
 					<option></option>
 						<option value="Scales"><?php echo($body_scales) ?> </option>
@@ -98,7 +93,7 @@ Template Post Type:  page
 				</div>
 				<div class="col-md-4">
 					<label><?php echo($caract_label) ?> :</label>
-					<!--<input  id="caract" class="advInput form-control">-->
+
 					<div class="characteristiques">
 						<div class=" inputFilterCheckbox">
 							<input type="checkbox" id="Ailes" name="caract"  class="chbox"  
@@ -125,7 +120,6 @@ Template Post Type:  page
 				</div>
 				<br/>
 				
-				<!--<button id="advsearchMaskBtn"><?php echo($hide) ?></button>  -->
 			</div>
 			
 			</div>
@@ -141,22 +135,7 @@ Template Post Type:  page
 		<p class="textResults"><?php echo($searchResultMsg) ?></p>
 		</div>
 	</div>
-		<!--<main id="main" class="site-main" role="main">
 
-			<?php
-			//while ( have_posts() ) : the_post();
-
-				//get_template_part( 'templates/content-page' );
-
-				// If comments are open or we have at least one comment, load up the comment template.
-				//if ( comments_open() || get_comments_number() ) :
-				//	comments_template();
-				//endif;
-
-			//endwhile; // End of the loop.
-			//?>
-
-		</main><!-- #main -->  
 	</div><!-- #primary -->
 </div><!-- .wrap -->
 
@@ -164,7 +143,6 @@ Template Post Type:  page
 
 <script type="text/javascript">
 var lang = '<?php echo(get_bloginfo("language")); ?>' ; 
-//console.log(lang);
 localStorage.setItem('lang', lang);
 
 </script>

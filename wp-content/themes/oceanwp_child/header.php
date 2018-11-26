@@ -9,10 +9,8 @@
  */ 
 $lang=get_bloginfo("language");
 $title = 'Threatened species';
-//$subTitle = "Identify a species and verify whether its trade is illegal or regulated at international level";
 if ($lang == 'fr-FR'){
 	$title = "Espèces menacées";
-	//$subTitle = "Identifier une espèce et vérifier si son commerce international est illégal ou réglementé";
 }
 
  ?>
@@ -61,7 +59,7 @@ if ($lang == 'fr-FR'){
 			<div class="logo">
 				<a href="<?php 	echo bloginfo('url');?> ">
 				<img src="<?php 
-				$url=get_site_url().'/wp-content/uploads/photos/logocites.png'; 
+				$url=get_site_url().'/wp-content/uploads/photos/logocites2.png'; 
 				echo $url ?>"><span class="siteTitle"><?php echo($title) ?></span></a>
 				
 				

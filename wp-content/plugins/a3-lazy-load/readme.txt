@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: a3 lazy load, Lazy Loading , image lazy load, lazyload
 Requires at least: 4.5
-Tested up to: 4.9.6
-Stable tag: 1.8.8
+Tested up to: 4.9.8
+Stable tag: 1.9.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -194,6 +194,31 @@ Filter tags to add to class name of theme to exclude lazy load on images or vide
 
 == Changelog ==
 
+= 1.9.1 - 2018/08/10 =
+* This maintenance update resolves 2 issues from the v 1.9.0 upgrade
+* Fix - Set min-width of placeholder to resolve any image tag that does not have width or height not showing the spinner effect. Example Gutenberg image block.
+* Fix - Update Lazy Load extra script to resolve duplicated call time for images, iframe, videos on viewport
+
+= 1.9.0 - 2018/08/06 =
+* This feature upgrade is focused on adding a number of new options for excluding Lazy Load from sections of a site. Compatibility with WordPress 4.9.8, Gutenberg 3.4.0 and WooCommerce 3.4.4
+* Feature - Add exclude from Lazy Load by URI
+* Feature - Add exclude from Lazy Load by Page types
+* Feature - Add support for using Wildcards in images and videos skipped classes
+* Tweak - Upgrade lazyloadxt lib to latest version 1.1.0
+* Tweak - Rename jquery.lazyloadxt.js to jquery.lazyloadxt.extra.js
+* Tweak - Add new Exclude by URI’s and Page Types Options box and help text
+* Tweak - Test for compatibility with WordPress 4.9.8
+* Tweak - Test for compatibility with WooCommerce 3.4.4
+* Tweak - Test for compatibility with Gutenberg 3.4.0
+* Fix - Make Skip Classes feature work when have entered it to that list
+* Credit - Props to Kurt @AMPERAGE-Marketing for his contribution to this release
+
+= 1.8.9 - 2018/06/04 =
+* This Maintenance update has 2 code tweaks for compatibility with themes and plugins that load images via the wp_kses_post sanitizer as WooCommerce does since version 3.4.0 with widgets and on Cart page.
+* Tweak - Append lazy attributes to attribute list of allowed post tags list so that lazy load can run on frontend when that content is output via wp_kses_post 
+* Tweak - Add noscript tag to allowed post tags list to resolve duplicate image if that image is output via wp_kses_post
+* Tweak - Test for compatibility with WooCommerce version 3.4.1
+
 = 1.8.8 - 2018/05/26 =
 * This maintenance update is for compatibility with WordPress 4.9.6 and the new GDPR compliance requirements for users in the EU 
 * Tweak - Test for compatibility with WordPress 4.9.6
@@ -380,6 +405,15 @@ Filter tags to add to class name of theme to exclude lazy load on images or vide
 
 
 == Upgrade Notice ==
+
+= 1.9.1 =
+This maintenance update resolves 2 issues from the v 1.9.0 upgrade
+
+= 1.9.0 =
+This feature upgrade is focused on adding a number of new options for excluding Lazy Load from sections of a site plus Compatibility with WordPress 4.9.8, Gutenberg 3.4.0 and WooCommerce 3.4.4
+
+= 1.8.9 =
+Maintenance update. This upgrade has 2 code tweaks for compatibility with themes and plugins that load images via the wp_kses_post sanitizer as WooCommerce does since version 3.4.0 with widgets and on Cart page.
 
 = 1.8.8 =
 Maintenance Update. Compatibility WordPress 4.9.6 and the new GDPR compliance requirements for users in the EU

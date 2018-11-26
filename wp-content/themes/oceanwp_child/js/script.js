@@ -1,5 +1,5 @@
 var $ = jQuery.noConflict();
-var domain = 'http://213.32.18.30/cites';
+var domain = serverurl ;
 var taxonomy = {
     "KINGDOM": {
         "fr": "Règne",
@@ -37,10 +37,9 @@ var taxonomy = {
 
 $(document).ready(function() {
 
-    // filter action, home page
+
     var $ = jQuery.noConflict();
 
-    // gérer le back fiche taxon -> filtre (sauvegarder les parametres de recherche et les relancer )
     // recherche simple
     var keyword = $('#searchVal').val();
     if (keyword) {
@@ -230,7 +229,6 @@ function generateEnTemplate(name_EN, picture, scName, name_FR, lien, rank, cites
     template += '<span>' + name_FR + '</span>';
     template += citesElem;
     template += '</a></div> ';
-
     return template;
 
 }
@@ -239,7 +237,7 @@ function generateFrTemplate(name_EN, picture, scName, name_FR, lien, rank, cites
 
     var citesElem = getCitesElement(cites, 'fr', rank, false);
 
-    var template = '<div class="taxon-post"> <a href="' + lien + '"><img src="' + picture + '" class="taxon-img"><span class="taxNameEn">' + name_FR;
+    var template = '<div class="taxon-post"> <a href="' + lien + '"><img src="' + picture + '" class="taxon-img"><div class="test"><span class="taxNameEn">' + name_FR;
     if (rank == "FAMILY") {
         template += ' <i>(famille)</i>';
     }
@@ -248,7 +246,7 @@ function generateFrTemplate(name_EN, picture, scName, name_FR, lien, rank, cites
     template += '<span>' + scName + '</span><br/>';
     template += '<span>' + name_EN + '</span>';
     template += citesElem;
-    template += '</a></div> ';
+    template += '</a></div></div> ';
 
     return template;
 }

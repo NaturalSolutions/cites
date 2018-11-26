@@ -217,9 +217,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(
@@ -258,9 +258,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Ocean Social Sharing',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(
@@ -299,9 +299,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(
@@ -341,9 +341,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(
@@ -388,9 +388,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(
@@ -403,6 +403,11 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'slug' 		=> 'ocean-side-panel',
 								'init'  	=> 'ocean-side-panel/ocean-side-panel.php',
 								'name' 		=> 'Ocean Side Panel',
+							),
+							array(
+								'slug' 		=> 'ocean-elementor-widgets',
+								'init'  	=> 'ocean-elementor-widgets/ocean-elementor-widgets.php',
+								'name' 		=> 'Ocean Elementor Widgets',
 							),
 						),
 					),
@@ -429,9 +434,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(
@@ -439,6 +444,11 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'slug' 		=> 'ocean-sticky-header',
 								'init'  	=> 'ocean-sticky-header/ocean-sticky-header.php',
 								'name' 		=> 'Ocean Sticky Header',
+							),
+							array(
+								'slug' 		=> 'ocean-elementor-widgets',
+								'init'  	=> 'ocean-elementor-widgets/ocean-elementor-widgets.php',
+								'name' 		=> 'Ocean Elementor Widgets',
 							),
 						),
 					),
@@ -470,9 +480,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Ocean Social Sharing',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(
@@ -522,9 +532,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 							array(
 								'slug'  	=> 'woocommerce',
@@ -564,7 +574,7 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 					'widgets_file'  	=> $url . 'store/widgets.wie',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
-					'posts_to_show'  	=> '3',
+					'posts_to_show'  	=> '6',
 					'elementor_width'  	=> '1220',
 					'is_shop'  			=> true,
 					'woo_image_size'  	=> '504',
@@ -594,19 +604,29 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Ocean Social Sharing',
 							),
 							array(
+								'slug'  	=> 'ocean-stick-anything',
+								'init'  	=> 'ocean-stick-anything/ocean-stick-anything.php',
+								'name'  	=> 'Ocean Stick Anything',
+							),
+							array(
 								'slug'  	=> 'elementor',
 								'init'  	=> 'elementor/elementor.php',
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 							array(
 								'slug'  	=> 'woocommerce',
 								'init'  	=> 'woocommerce/woocommerce.php',
 								'name'  	=> 'WooCommerce',
+							),
+							array(
+								'slug'  	=> 'woo-variation-swatches',
+								'init'  	=> 'woo-variation-swatches/woo-variation-swatches.php',
+								'name'  	=> 'WooCommerce Variation Swatches',
 							),
 						),
 						'premium' => array(
@@ -650,9 +670,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(
@@ -697,9 +717,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(
@@ -754,9 +774,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 							array(
 								'slug'  	=> 'woocommerce',
@@ -810,9 +830,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								'name'  	=> 'Elementor',
 							),
 							array(
-								'slug'  	=> 'contact-form-7',
-								'init'  	=> 'contact-form-7/wp-contact-form-7.php',
-								'name'  	=> 'Contact Form 7',
+								'slug'  	=> 'wpforms-lite',
+								'init'  	=> 'wpforms-lite/wpforms.php',
+								'name'  	=> 'WPForms',
 							),
 						),
 						'premium' => array(

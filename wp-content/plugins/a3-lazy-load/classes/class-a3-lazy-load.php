@@ -43,6 +43,13 @@ class A3_Lazy_Load
 			return;
 		}
 
+		// Check for current page is excluded
+		global $a3_lazy_load_excludes;
+		$is_excluded = $a3_lazy_load_excludes->check_excluded();
+		if ( $is_excluded ) {
+			return;
+		}
+
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 11 );
 
 		add_filter( 'a3_lazy_load_html', array( $this, 'filter_html' ), 10, 2 );
@@ -110,6 +117,9 @@ class A3_Lazy_Load
 				add_action( 'dynamic_sidebar_after', array( $this, 'sidebar_after_filter_videos' ), 1000 );
 			}
 		}
+
+		// Add lazy attributes to all allowed post tags list
+		add_filter( 'wp_kses_allowed_html', array( $this, 'add_lazy_attributes' ), 10, 2 );
 	}
 
 	static function _instance() {
@@ -152,7 +162,7 @@ class A3_Lazy_Load
 		do_action('before_a3_lazy_load_xt_script');
 
 		wp_deregister_script( 'jquery-lazyloadxt' );
-		wp_register_script( 'jquery-lazyloadxt', apply_filters( 'a3_lazy_load_main_script', A3_LAZY_LOAD_JS_URL.'/jquery.lazyloadxt'.$suffix.'.js' ), array( 'jquery' ), self::version, $in_footer );
+		wp_register_script( 'jquery-lazyloadxt', apply_filters( 'a3_lazy_load_main_script', A3_LAZY_LOAD_JS_URL.'/jquery.lazyloadxt.extra'.$suffix.'.js' ), array( 'jquery' ), self::version, $in_footer );
 		wp_register_script( 'jquery-lazyloadxt-srcset', apply_filters( 'a3_lazy_load_main_script', A3_LAZY_LOAD_JS_URL.'/jquery.lazyloadxt.srcset'.$suffix.'.js' ), array( 'jquery', 'jquery-lazyloadxt' ), self::version, $in_footer );
 		wp_register_script( 'jquery-lazyloadxt-extend', apply_filters( 'a3_lazy_load_extend_script', A3_LAZY_LOAD_JS_URL.'/jquery.lazyloadxt.extend.js' ), array( 'jquery', 'jquery-lazyloadxt', 'jquery-lazyloadxt-srcset' ), self::version, $in_footer );
 
@@ -221,6 +231,43 @@ class A3_Lazy_Load
 		}
 
 		return false;
+	}
+
+	static public function preg_quote_with_wildcards( $what ){
+		// Perform preg_quote, but still allow `.*` to be used in the class list as a wildcard.
+		return str_replace( array( '\*', '\.' ), '', preg_quote( $what, '/' ) );
+	}
+
+	static function add_lazy_attributes( $allowedposttags, $context ) {
+
+		if ( 'post' === $context && ! empty( $allowedposttags ) ) {
+
+			$lazy_attributes = array(
+				'data-lazy-type' => true,
+				'data-src'       => true,
+				'data-srcset'    => true,
+				'data-poster'    => true,
+			);
+
+			foreach ( $allowedposttags as $tag => $attributes ) {
+				if ( true === $attributes ) {
+					$attributes = array();
+				}
+
+				if ( is_array( $attributes ) ) {
+					// Add lazy attributes to post tag
+					$allowedposttags[$tag] = array_merge( $attributes, $lazy_attributes );
+				}
+			}
+
+			// Add noscript tag to allowed post tags list
+			if ( ! isset( $allowedposttags['noscript'] ) ) {
+				$allowedposttags['noscript'] = array();
+			}
+
+		}
+
+		return $allowedposttags;
 	}
 
 	static function filter_html( $content, $include_noscript = null ) {
@@ -302,7 +349,7 @@ class A3_Lazy_Load
 		$A3_Lazy_Load = A3_Lazy_Load::_instance();
 
 		if ( is_array( $A3_Lazy_Load->_skip_images_classes ) ) {
-			$skip_images_preg_quoted = array_map( 'preg_quote', $A3_Lazy_Load->_skip_images_classes );
+			$skip_images_preg_quoted = array_map( array( $A3_Lazy_Load, 'preg_quote_with_wildcards' ), $A3_Lazy_Load->_skip_images_classes );
 			$skip_images_regex = sprintf( '/class=".*(%s).*"/s', implode( '|', $skip_images_preg_quoted ) );
 		}
 
@@ -337,7 +384,7 @@ class A3_Lazy_Load
 		$replace = array();
 
 		if ( is_array( $this->_skip_images_classes ) ) {
-			$skip_images_preg_quoted = array_map( 'preg_quote', $this->_skip_images_classes );
+			$skip_images_preg_quoted = array_map( array( $this, 'preg_quote_with_wildcards' ), $this->_skip_images_classes );
 			$skip_images_regex = sprintf( '/class=".*(%s).*"/s', implode( '|', $skip_images_preg_quoted ) );
 		}
 
@@ -441,7 +488,7 @@ class A3_Lazy_Load
 		$replace = array();
 
 		if ( is_array( $this->_skip_videos_classes ) ) {
-			$skip_images_preg_quoted = array_map( 'preg_quote', $this->_skip_videos_classes );
+			$skip_images_preg_quoted = array_map( array( $this, 'preg_quote_with_wildcards' ), $this->_skip_videos_classes );
 			$skip_images_regex = sprintf( '/class=".*(%s).*"/s', implode( '|', $skip_images_preg_quoted ) );
 		}
 
@@ -487,7 +534,7 @@ class A3_Lazy_Load
 		$replace = array();
 
 		if ( is_array( $this->_skip_videos_classes ) ) {
-			$skip_images_preg_quoted = array_map( 'preg_quote', $this->_skip_videos_classes );
+			$skip_images_preg_quoted = array_map( array( $this, 'preg_quote_with_wildcards' ), $this->_skip_videos_classes );
 			$skip_images_regex = sprintf( '/class=".*(%s).*"/s', implode( '|', $skip_images_preg_quoted ) );
 		}
 
@@ -535,7 +582,7 @@ class A3_Lazy_Load
 		$replace = array();
 
 		if ( is_array( $this->_skip_videos_classes ) ) {
-			$skip_images_preg_quoted = array_map( 'preg_quote', $this->_skip_videos_classes );
+			$skip_images_preg_quoted = array_map( array( $this, 'preg_quote_with_wildcards' ), $this->_skip_videos_classes );
 			$skip_images_regex = sprintf( '/class=".*(%s).*"/s', implode( '|', $skip_images_preg_quoted ) );
 		}
 

@@ -1,9 +1,9 @@
 === Ocean Extra ===
 Contributors: oceanwp
 Tags: widgets, meta box, metaboxes, metabox, oceanwp
-Requires at least: 4.5
-Tested up to: 4.9.5
-Stable tag: 1.4.11
+Requires at least: 4.6
+Tested up to: 4.9.8
+Stable tag: 1.4.29
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,63 @@ This plugin will only work with the [OceanWP](https://oceanwp.org/) theme.
 3. Custom CSS.
 
 == Changelog ==
+
+= 1.4.29 =
+- Tweak: Some tweaks for an upcoming big update.
+
+= 1.4.28 =
+- Tweak: Notices will not be displayed if Ocean White Label is used (you don't need to update if you don't use this white label plugin).
+
+= 1.4.27 =
+- Added: Dismiss button for the theme panel rating box so you can easily remove it.
+
+= 1.4.26 =
+- Fixed: Missing CSS issue.
+
+= 1.4.25 =
+- Tweak: Contact Forms 7 replaced by WPForms for all free demos, which is a much better and flexible form plugin.
+
+= 1.4.24 =
+- Fixed: Issue with the [oceanwp_woo_free_shipping_left} shortcode.
+
+= 1.4.23 =
+- Fixed: White screen if PHP under 5.6 is used.
+
+= 1.4.22 =
+- Tweak: Slick script in Theme Panel > Scripts & Styles.
+
+= 1.4.21 =
+- Fixed: Issue with the About Me widget in the customizer.
+
+= 1.4.20 =
+- Added: New setting in OceanWP Settings to select a custom footer per page/post.
+- Tweak: Sticky Header notice automatically removed if one premium extension is activated.
+
+= 1.4.19 =
+- Tweak: New setting for the Custom Menu widget to allow you to open the sub menus at the parent link hover or via an icon click.
+
+= 1.4.18 =
+- Fixed: issue with some shortcodes and Yoast SEO.
+
+= 1.4.17 =
+- Tweak: Theme Panel sidebar improved.
+
+= 1.4.16 =
+- Fixed: Social Share widget not displayed in the widget page.
+
+= 1.4.15 =
+- Added: New widget Social Share. 
+- Added: New premium extension Full Screen in the extensions page.
+
+= 1.4.14 =
+- Added: New premium extension "Ocean Cookie Notice" in the Extensions admin page. 
+
+= 1.4.13 =
+- Tweak: MailChimp widget improved, you just need to add your MailChimp API Key and List ID in Theme Panel > Integration, and the form will don't redirect anymore.
+
+= 1.4.12 =
+- Added: Typography settings for the Menu in the OceanWP Settings metabox.
+- Removed: Push Monkey integration, if you used it in the Theme Panel, you just need to install the official plugin: https://wordpress.org/plugins/push-monkey-desktop-push-notifications/
 
 = 1.4.11 =
 -Tweak: Theme Panel edited.

@@ -29,6 +29,8 @@ class PLL_Admin_Base extends PLL_Base {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_print_footer_scripts', array( $this, 'admin_print_footer_scripts' ), 0 ); // High priority in case an ajax request is sent by an immediately invoked function
 
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue_scripts' ) );
+
 		// Lingotek
 		if ( ! defined( 'POLYLANG_PRO' ) && ( ! defined( 'PLL_LINGOTEK_AD' ) || PLL_LINGOTEK_AD ) ) {
 			require_once POLYLANG_DIR . '/lingotek/lingotek.php';
@@ -46,6 +48,7 @@ class PLL_Admin_Base extends PLL_Base {
 			return;
 		}
 
+		$this->notices = new PLL_Admin_Notices( $this );
 		$this->links = new PLL_Admin_Links( $this ); // FIXME needed here ?
 		$this->static_pages = new PLL_Admin_Static_Pages( $this ); // FIXME needed here ?
 		$this->filters_links = new PLL_Filters_Links( $this ); // FIXME needed here ?
@@ -115,10 +118,12 @@ class PLL_Admin_Base extends PLL_Base {
 		// 3 => 1 if loaded in footer
 		// FIXME: check if I can load more scripts in footer
 		$scripts = array(
-			'post'  => array( array( 'post', 'media', 'async-upload', 'edit' ), array( 'jquery', 'wp-ajax-response', 'post', 'jquery-ui-autocomplete' ), 0, 1 ),
-			'media' => array( array( 'upload' ), array( 'jquery' ), 0, 1 ),
-			'term'  => array( array( 'edit-tags', 'term' ), array( 'jquery', 'wp-ajax-response', 'jquery-ui-autocomplete' ), 0, 1 ),
-			'user'  => array( array( 'profile', 'user-edit' ), array( 'jquery' ), 0, 0 ),
+			'classic-editor' => array( array( 'post', 'media', 'async-upload' ), array( 'jquery', 'wp-ajax-response', 'post', 'jquery-ui-autocomplete' ), 0, 1 ),
+			'post'           => array( array( 'edit' ), array( 'jquery', 'wp-ajax-response' ), 0, 1 ),
+			'media'          => array( array( 'upload' ), array( 'jquery' ), 0, 1 ),
+			'term'           => array( array( 'edit-tags', 'term' ), array( 'jquery', 'wp-ajax-response', 'jquery-ui-autocomplete' ), 0, 1 ),
+			'user'           => array( array( 'profile', 'user-edit' ), array( 'jquery' ), 0, 0 ),
+			'widgets'        => array( array( 'widgets' ), array( 'jquery' ), 0, 0 ),
 		);
 
 		foreach ( $scripts as $script => $v ) {
@@ -128,6 +133,38 @@ class PLL_Admin_Base extends PLL_Base {
 		}
 
 		wp_enqueue_style( 'polylang_admin', plugins_url( '/css/admin' . $suffix . '.css', POLYLANG_FILE ), array(), POLYLANG_VERSION );
+
+		$this->localize_scripts();
+	}
+
+	/**
+	 * Enqueue scripts to the WP Customizer.
+	 *
+	 * @since 2.4.0
+	 */
+	public function customize_controls_enqueue_scripts() {
+		if ( $this->model->get_languages_list() ) {
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			wp_enqueue_script( 'pll_widgets', plugins_url( '/js/widgets' . $suffix . '.js', POLYLANG_FILE ), array( 'jquery' ), POLYLANG_VERSION, true );
+			$this->localize_scripts();
+		}
+	}
+
+	/**
+	 * Localize scripts.
+	 *
+	 * @since 2.4.0
+	 */
+	public function localize_scripts() {
+		if ( wp_script_is( 'pll_widgets', 'enqueued' ) ) {
+			wp_localize_script(
+				'pll_widgets',
+				'pll_widgets',
+				array(
+					'flags' => wp_list_pluck( $this->model->get_languages_list(), 'flag', 'slug' ),
+				)
+			);
+		}
 	}
 
 	/**
@@ -158,38 +195,38 @@ class PLL_Admin_Base extends PLL_Base {
 
 		$str = http_build_query( $params );
 		$arr = json_encode( $params );
-?>
-<script type="text/javascript">
-	if (typeof jQuery != 'undefined') {
-		(function($){
-			$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-				if ( -1 != options.url.indexOf( ajaxurl ) || -1 != ajaxurl.indexOf( options.url ) ) {
-					if ( 'undefined' === typeof options.data ) {
-						options.data = ( 'get' === options.type.toLowerCase() ) ? '<?php echo $str; ?>' : <?php echo $arr; ?>;
-					} else {
-						if ( 'string' === typeof options.data ) {
-							if ( '' === options.data && 'get' === options.type.toLowerCase() ) {
-								options.url = options.url+'&<?php echo $str; ?>';
+		?>
+		<script type="text/javascript">
+			if (typeof jQuery != 'undefined') {
+				(function($){
+					$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+						if ( -1 != options.url.indexOf( ajaxurl ) || -1 != ajaxurl.indexOf( options.url ) ) {
+							if ( 'undefined' === typeof options.data ) {
+								options.data = ( 'get' === options.type.toLowerCase() ) ? '<?php echo $str; ?>' : <?php echo $arr; ?>;
 							} else {
-								try {
-									o = $.parseJSON(options.data);
-									o = $.extend(o, <?php echo $arr; ?>);
-									options.data = JSON.stringify(o);
-								}
-								catch(e) {
-									options.data = '<?php echo $str; ?>&'+options.data;
+								if ( 'string' === typeof options.data ) {
+									if ( '' === options.data && 'get' === options.type.toLowerCase() ) {
+										options.url = options.url+'&<?php echo $str; ?>';
+									} else {
+										try {
+											var o = $.parseJSON(options.data);
+											o = $.extend(o, <?php echo $arr; ?>);
+											options.data = JSON.stringify(o);
+										}
+										catch(e) {
+											options.data = '<?php echo $str; ?>&'+options.data;
+										}
+									}
+								} else {
+									options.data = $.extend(options.data, <?php echo $arr; ?>);
 								}
 							}
-						} else {
-							options.data = $.extend(options.data, <?php echo $arr; ?>);
 						}
-					}
-				}
-			});
-		})(jQuery)
-	}
-</script>
-<?php
+					});
+				})(jQuery)
+			}
+		</script>
+		<?php
 	}
 
 	/**
@@ -235,12 +272,6 @@ class PLL_Admin_Base extends PLL_Base {
 	 * @since 1.2.3
 	 */
 	public function init_user() {
-		// Backend locale
-		// FIXME: Backward compatibility with WP < 4.7
-		if ( version_compare( $GLOBALS['wp_version'], '4.7alpha', '<' ) ) {
-			add_filter( 'locale', array( $this, 'get_locale' ) );
-		}
-
 		// Language for admin language filter: may be empty
 		// $_GET['lang'] is numeric when editing a language, not when selecting a new language in the filter
 		if ( ! wp_doing_ajax() && ! empty( $_GET['lang'] ) && ! is_numeric( $_GET['lang'] ) && current_user_can( 'edit_user', $user_id = get_current_user_id() ) ) {
@@ -266,13 +297,7 @@ class PLL_Admin_Base extends PLL_Base {
 
 		// Inform that the admin language has been set
 		// Only if the admin language is one of the Polylang defined language
-		// FIXME test get_user_locale for backward compatibility with WP 4.7
-		if ( $curlang = $this->model->get_language( function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale() ) ) {
-			// FIXME: Backward compatibility with WP < 4.7
-			if ( version_compare( $GLOBALS['wp_version'], '4.7alpha', '<' ) ) {
-				$GLOBALS['text_direction'] = $curlang->is_rtl ? 'rtl' : 'ltr'; // force text direction according to language setting
-			}
-
+		if ( $curlang = $this->model->get_language( get_user_locale() ) ) {
 			/** This action is documented in frontend/choose-lang.php */
 			do_action( 'pll_language_defined', $curlang->slug, $curlang );
 		} else {
@@ -284,6 +309,7 @@ class PLL_Admin_Base extends PLL_Base {
 	/**
 	 * Avoids parsing a tax query when all languages are requested
 	 * Fixes https://wordpress.org/support/topic/notice-undefined-offset-0-in-wp-includesqueryphp-on-line-3877 introduced in WP 4.1
+	 *
 	 * @see the suggestion of @boonebgorges, https://core.trac.wordpress.org/ticket/31246
 	 *
 	 * @since 1.6.5
@@ -297,19 +323,6 @@ class PLL_Admin_Base extends PLL_Base {
 		}
 
 		return $qvars;
-	}
-
-	/**
-	 * Get the locale based on user preference
-	 * FIXME: Backward compatibility with WP < 4.7
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $locale
-	 * @return string modified locale
-	 */
-	public function get_locale( $locale ) {
-		return ( $loc = get_user_meta( get_current_user_id(), 'locale', 'true' ) ) ? $loc : $locale;
 	}
 
 	/**
@@ -335,25 +348,29 @@ class PLL_Admin_Base extends PLL_Base {
 			esc_html( $selected->name )
 		);
 
-		$wp_admin_bar->add_menu( array(
-			'id'     => 'languages',
-			'title'  => $selected->flag . $title,
-			'href'   => esc_url( add_query_arg( 'lang', $selected->slug, remove_query_arg( 'paged' ) ) ),
-			'meta'   => array( 'title' => __( 'Filters content by language', 'polylang' ) ),
-		) );
+		$wp_admin_bar->add_menu(
+			array(
+				'id'    => 'languages',
+				'title' => $selected->flag . $title,
+				'href'  => esc_url( add_query_arg( 'lang', $selected->slug, remove_query_arg( 'paged' ) ) ),
+				'meta'  => array( 'title' => __( 'Filters content by language', 'polylang' ) ),
+			)
+		);
 
 		foreach ( array_merge( array( $all_item ), $this->model->get_languages_list() ) as $lang ) {
 			if ( $selected->slug === $lang->slug ) {
 				continue;
 			}
 
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'languages',
-				'id'     => $lang->slug,
-				'title'  => $lang->flag . esc_html( $lang->name ),
-				'href'   => esc_url( add_query_arg( 'lang', $lang->slug, remove_query_arg( 'paged' ) ) ),
-				'meta'   => 'all' === $lang->slug ? array() : array( 'lang' => esc_attr( $lang->get_locale( 'display' ) ) ),
-			) );
+			$wp_admin_bar->add_menu(
+				array(
+					'parent' => 'languages',
+					'id'     => $lang->slug,
+					'title'  => $lang->flag . esc_html( $lang->name ),
+					'href'   => esc_url( add_query_arg( 'lang', $lang->slug, remove_query_arg( 'paged' ) ) ),
+					'meta'   => 'all' === $lang->slug ? array() : array( 'lang' => esc_attr( $lang->get_locale( 'display' ) ) ),
+				)
+			);
 		}
 	}
 }

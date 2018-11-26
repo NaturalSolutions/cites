@@ -16,15 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// Get posts format
 	$format = get_post_format();
 	$type = get_post_type();
-	//$lang=get_bloginfo("language");
-	//print($lang);
+
 	if (isset($_GET['lang'])) {
 		$lg = $_GET['lang'];
 	  } else {
 
 		$lg = 'fr';
 	  }
-	  //print($lg);
 
 	// Get elements
 	$elements = oceanwp_blog_single_elements_positioning();
@@ -62,11 +60,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if($type!= 'taxon') {
 				get_template_part( 'partials/single/content' );
 			} else {
-				/*if($lg =='en') {
-					get_template_part( 'partials/single/content_en' );
-				} else {
-					get_template_part( 'partials/single/content_fr' );
-				}*/
 				get_template_part( 'partials/single/content_taxon' );
 			}
 		}
