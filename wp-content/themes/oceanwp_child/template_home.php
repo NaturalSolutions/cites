@@ -8,7 +8,7 @@ Template Post Type:  page
 	$lang=get_bloginfo("language");
 	$search = 'search';
 	$adv = 'advanced';
-	$placeholder = "Specie name";
+	$placeholder = "Search for a species...";
 	$placeholderCountry = "Country";
 	$origin_label ="Geographic distribution";
 	$body_label = "Body";
@@ -34,7 +34,7 @@ Template Post Type:  page
 		$search = 'rechercher';
 		$adv = 'avancée';
 		$hide = 'masquer';
-		$placeholder = "Nom de l'espèce";
+		$placeholder = "Chercher une espèce ...";
 		$placeholderCountry = "Pays";
 		$origin_label ="Provient de";
 		$body_label = "Couvert de";
@@ -144,5 +144,6 @@ Template Post Type:  page
 <script type="text/javascript">
 var lang = '<?php echo(get_bloginfo("language")); ?>' ; 
 localStorage.setItem('lang', lang);
+filter();
 
 </script>
